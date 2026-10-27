@@ -211,6 +211,12 @@ Run `restore` with the JSON journal printed by apply and `--confirm`, on the sam
 
 The toolkit excludes third-party packages and core Google/Android services. DStv playback worked in the reference manual setup. Firmware, app versions, DRM requirements, and package dependencies vary; test your own apps and restore the last batch if something breaks.
 
+## Contributors
+
+- [Tumelo Rathebe (@AlphadogRSA)](https://github.com/AlphadogRSA) — project owner, reference TV setup, feature choices, and hands-on playback and performance feedback.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) to contribute device reports, documentation, or code.
+
 ## Sources and project discovery
 
 - [Original Android TV debloat toolkit](https://github.com/seun-novodev/android-tv-debloat-toolkit)
