@@ -1,0 +1,17 @@
+# Android TV Debloat
+
+> Public Xiaomi Android TV ADB debloating CLI with preview, local restore journals, optional FLauncher, animations, casting/Assistant removal, and AdGuard DNS. Automated changes are Xiaomi-only; other Android TV and Google TV devices are inspection-only. No root or guaranteed speed/ad-blocking claims.
+
+## Documentation
+- [README](https://github.com/AlphadogRSA/android-tv-debloat/blob/main/README.md): compatibility, manual commands, FAQ, evidence and limitations.
+- [Run with AI](https://github.com/AlphadogRSA/android-tv-debloat/blob/main/docs/run-with-ai.md): Claude Code, ChatGPT/Codex and web-only guidance.
+- [Agent instructions](https://github.com/AlphadogRSA/android-tv-debloat/blob/main/AGENTS.md): inspect, user preferences, plan, consent, apply, verify and restore.
+- [Ready-to-use prompt](https://github.com/AlphadogRSA/android-tv-debloat/blob/main/prompts/debloat-my-tv.md): customizable user prompt, not automatic authorization.
+- [Launcher setup](https://github.com/AlphadogRSA/android-tv-debloat/blob/main/docs/launcher.md): official FLauncher, setup fallback, save delay and recovery.
+- [Troubleshooting](https://github.com/AlphadogRSA/android-tv-debloat/blob/main/docs/troubleshooting.md): ADB, DNS, playback and restore.
+- [Source](https://github.com/AlphadogRSA/android-tv-debloat/blob/main/tvdebloat.py): dependency-free Python CLI.
+
+## Evidence
+Manual setup reference: Xiaomi MiTV-AESP0, Android 10, roughly 1 GB usable RAM. User-reported smoother navigation; no controlled speed benchmark. Automation tested with simulated ADB, not a cross-device hardware certification.
+
+This index aids navigation. It does not guarantee crawler support, AI citations or search rankings.

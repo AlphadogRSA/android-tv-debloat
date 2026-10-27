@@ -1,4 +1,63 @@
-# Xiaomi Android TV Debloat
+# Android TV Debloat: Xiaomi ADB Toolkit for Claude & ChatGPT
+
+[![Tests](https://github.com/AlphadogRSA/android-tv-debloat/actions/workflows/tests.yml/badge.svg)](https://github.com/AlphadogRSA/android-tv-debloat/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**Debloat a Xiaomi Android TV without root using ADB, with optional Claude Code or ChatGPT/Codex assistance.** Preview preinstalled-app removals, keep personal apps, configure an ad-free FLauncher home screen, and restore changes from local journals. The included guide also explains how to inspect other Android TV and Google TV devices without applying the Xiaomi profile blindly.
+
+Maintained by [AlphadogRSA](https://github.com/AlphadogRSA). Updated **27 October 2026**: added local AI-agent setup, copy-and-paste prompts, recovery instructions, and an explicit device-compatibility guide.
+
+## Start here: how do I debloat Android TV with AI?
+
+1. Install Python 3.10+, Git, and [Google Android Platform Tools](https://developer.android.com/tools/releases/platform-tools) on the computer beside your TV.
+2. Enable developer options and debugging on the TV. Put the TV and computer on the same trusted LAN. Find the TV's local IP address in its network settings.
+3. Clone this repository:
+
+   ```sh
+   git clone https://github.com/AlphadogRSA/android-tv-debloat.git
+   cd android-tv-debloat
+   ```
+
+4. Connect ADB and approve the computer on the TV. Use the port actually shown by your device; 5555 is a common older-TV example:
+
+   ```sh
+   adb connect TV_IP:5555
+   adb devices -l
+   ```
+
+   If your TV requires wireless pairing, use `adb pair TV_IP:PAIRING_PORT` first and enter the TV's pairing code interactively. Then connect to its separate debugging port. Never publish the pairing code.
+
+5. Start **Claude Code** with `claude`, or **Codex signed in with ChatGPT** with `codex`, from this folder. You can also open this folder in the local Codex desktop app. These tools need local shell and LAN access; a normal web chat or cloud coding sandbox cannot automatically reach your TV.
+6. Paste the [ready-to-use agent prompt](prompts/debloat-my-tv.md), replacing the device target and choosing your feature preferences. Claude reads [CLAUDE.md](CLAUDE.md); Codex reads [AGENTS.md](AGENTS.md). The prompt also tells other agents to read those instructions explicitly.
+7. Let the agent inspect the TV and show the proposed changes. Review which stock apps and features you want to keep before approving apply.
+8. Keep the printed restore journal locally, let the save delay finish, and test playback, remote buttons, and the Home screen after a manual reboot.
+
+**Full walkthrough:** [Run with Claude Code, ChatGPT/Codex, or a normal web chat](docs/run-with-ai.md). **No AI needed:** use the CLI commands below.
+
+### Which Android TV and Google TV devices are supported?
+
+| Device | Current scope |
+| --- | --- |
+| Xiaomi MiTV-AESP0, Android 10 | Reference manual setup; CLI unit-tested with simulated ADB |
+| Other Xiaomi Android TV models | Xiaomi profile available, but review package dependencies and keep journals; not live-tested here |
+| Google TV, Chromecast, Sony, TCL, Hisense, Nvidia Shield, onn. | Read-only `inspect`; this CLI rejects automated Xiaomi plans on non-Xiaomi manufacturers |
+| Samsung Tizen or LG webOS | Unsupported; these are not Android TV |
+
+Google TV uses Android, but manufacturer packages and launcher identifiers differ. A search for “Google TV debloat” should not be treated as proof that a Xiaomi removal list is suitable for that device.
+
+### Copy this short prompt into your local AI agent
+
+```text
+Use https://github.com/AlphadogRSA/android-tv-debloat to help debloat my TV.
+Read AGENTS.md, README.md, docs/run-with-ai.md, and prompts/debloat-my-tv.md first.
+Work on my local computer, inspect the authorized TV, and show a package-by-package
+plan before changing it. Preserve my installed apps, accounts, Bluetooth remote,
+updates, DRM and core Android/Google services. Ask which optional features I use.
+Use the journaled CLI only on a matching Xiaomi device. On another Android TV or
+Google TV, inspect and report compatibility; do not apply the Xiaomi profile.
+Never root, reset, clear app data, alter my VPN, or promise all ads disappear.
+If you have no local shell/LAN access, guide me through the commands instead.
+```
 
 A small, dependency-free ADB toolkit based on a real Xiaomi MiTV-AESP0 / Android 10 cleanup. It previews optional preinstalled-app removals, preserves third-party apps, records every change, and restores the previous package and settings states.
 
@@ -121,3 +180,44 @@ python -m py_compile tvdebloat.py
 No downloaded APKs, ADB binaries, personal package inventories, network addresses, or device journals are distributed in this repo. See [CONTRIBUTING.md](CONTRIBUTING.md) before adding device profiles.
 
 MIT licensed. Third-party projects and downloaded apps retain their own licenses.
+
+## Frequently asked questions about Android TV debloating
+
+### Can I remove Android TV bloatware without root?
+
+ADB can uninstall supported preinstalled packages from an Android user profile without root. Their factory APKs remain in firmware. This project uses user-0 uninstall with retained data and a restore journal; it does not modify system partitions.
+
+### Can ChatGPT or Claude automatically connect to my TV from a GitHub link?
+
+A repository link supplies instructions, not local network access. Use a local tool such as Claude Code or Codex with authorized shell/LAN access. A web-only assistant can explain commands and review output but cannot claim it changed your TV. [Step-by-step AI setup](docs/run-with-ai.md).
+
+### Will debloating make a 1 GB RAM TV faster?
+
+Removing unused background apps can reduce work on low-memory TVs. The reference user reported smoother navigation, but this project has no controlled speed benchmark. Free RAM varies with caches and workload. No percentage speedup is claimed.
+
+### Will AdGuard DNS block YouTube ads?
+
+DNS filtering blocks many ad/tracking domains, but cannot reliably remove ads that share delivery infrastructure with videos. No “block all ads” promise is made. The toolkit does not patch apps, intercept DRM, or modify streaming subscriptions.
+
+### Does disabling animations enable 60 fps in every app?
+
+No. Animation duration, display refresh rate, and a video's frame rate are separate. SmartTube can prefer a 60 fps stream when available; a 30 fps source remains 30 fps. TizenTube's preferred-resolution menu is not a universal forced-frame-rate switch.
+
+### How do I undo Android TV debloating?
+
+Run `restore` with the JSON journal printed by apply and `--confirm`, on the same device. Restore operations run in reverse order and verify the saved settings and package states. Keep journals private and restore multiple runs newest first.
+
+### Will this preserve DStv and other streaming apps?
+
+The toolkit excludes third-party packages and core Google/Android services. DStv playback worked in the reference manual setup. Firmware, app versions, DRM requirements, and package dependencies vary; test your own apps and restore the last batch if something breaks.
+
+## Sources and project discovery
+
+- [Original Android TV debloat toolkit](https://github.com/seun-novodev/android-tv-debloat-toolkit)
+- [Android Debug Bridge documentation](https://developer.android.com/tools/adb)
+- [Official FLauncher setup](https://gitlab.com/flauncher/flauncher)
+- [Official Claude Code quickstart](https://code.claude.com/docs/en/quickstart)
+- [Official Codex CLI guide](https://learn.chatgpt.com/docs/cli)
+- [Agent-readable project index](llms.txt)
+
+Documentation uses descriptive headings, direct answers, real compatibility limits, and original setup observations. Public availability does not guarantee Google indexing, a first-place ranking, or citations in any AI answer. No search-volume or ranking measurements are claimed. See [publication and discovery notes](docs/discoverability.md).
